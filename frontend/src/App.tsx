@@ -9,7 +9,6 @@ const DEFAULT_PORT = 8080;
 const WS_ADDRESS = `ws://${hostname}:${DEFAULT_PORT}`;
 
 function App() {
-  
   const socket = useMemo(() => io(WS_ADDRESS), []);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [messages, setMessages] = useState<
