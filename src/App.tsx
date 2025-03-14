@@ -62,17 +62,17 @@ function App() {
             />
             <form
               onSubmit={(event) => {
+                event.preventDefault();
+
                 const formData = new FormData(event.target as HTMLFormElement);
                 const message = formData.get("message");
                 if (message === null || message === "") return;
                 (event.target as HTMLFormElement).reset();
-                console.log(message);
 
                 socket.emit("message", {
                   message,
                   username: username === "" ? "Anon" : username,
                 });
-                event.preventDefault();
               }}
               className="input-container__message"
             >
