@@ -3,7 +3,6 @@ import "./App.css";
 import { io } from "socket.io-client";
 import React from "react";
 
-
 const hostname = import.meta.env.VITE_HOST || window.location.hostname;
 const DEFAULT_PORT = 8080;
 const WS_ADDRESS = `ws://${hostname}:${DEFAULT_PORT}`;
