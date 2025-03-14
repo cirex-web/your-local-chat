@@ -3,7 +3,10 @@ import "./App.css";
 import { io } from "socket.io-client";
 import React from "react";
 
-const WS_ADDRESS = `ws://${import.meta.env.VITE_IP_ADDRESS}:8080`;
+const hostname = import.meta.env.VITE_HOST || window.location.hostname;
+const WS_PORT = 8080;
+const WS_ADDRESS = `ws://${hostname}:${WS_PORT}`;
+
 function App() {
   const socket = useMemo(() => io(WS_ADDRESS), []);
   const [isConnected, setIsConnected] = useState(socket.connected);
