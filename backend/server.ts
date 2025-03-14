@@ -8,12 +8,14 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  socket.on("message", (message) => {
-    console.log(message);
-    io.emit("message", `${socket.id.substring(0, 2)} said ${message}`);
-  });
+  socket.on(
+    "message",
+    ({ message, username }: { message: string; username: string }) => {
+      io.emit("message", { message, username });
+    }
+  );
 });
 
-httpServer.listen(8080, () =>
-  console.log("listening on http://localhost:8080")
+httpServer.listen(8080, "0.0.0.0", () =>
+  console.log("listening on " + JSON.stringify(httpServer.address()))
 );

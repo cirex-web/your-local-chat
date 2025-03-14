@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "tsx server.ts"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +12,8 @@
   "dependencies": {
     "socket.io": "^3.0.4",
     "ws": "^7.4.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3"
   }
 }
