@@ -2,8 +2,20 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import { io } from "socket.io-client";
 
-const WS_ADDRESS = "ws://172.26.14.128:8080";
 function App() {
+  const [serverInfo, setServerInfo] = useState({
+    hostname: ''
+  });
+
+  useEffect(() => {
+    const hostname = import.meta.env.VITE_HOST || window.location.hostname;
+    
+    setServerInfo({
+      hostname
+    });
+  }, []);
+  const DEFAULT_PORT = 8080;
+  const WS_ADDRESS = `ws://${serverInfo.hostname}:${DEFAULT_PORT}`;
   const socket = useMemo(() => io(WS_ADDRESS), []);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [messages, setMessages] = useState<
