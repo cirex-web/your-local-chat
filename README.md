@@ -39,10 +39,10 @@ Familiarity with React and Typescript is recommended.
     const io = new Server(httpServer, { cors: { origin: "*" } });
     ```
 
-    > [!TIP]
-    > It's good practice to use `const` when declaring variables in `js` or `ts` that you know won't be re-assigned.
+> [!TIP]
+> It's good practice to use `const` when declaring variables in `js` or `ts` that you know won't be re-assigned.
 
-1.  We’ll need to be able to send and receive messages from clients. Here are some hints:
+5.  We’ll need to be able to send and receive messages from clients. Here are some hints:
 
     - To listen to a websocket connection, we can call `io.on(“connect”,(socket)=>{})` where the second argument is a callback that takes in the newly created connection.
 
@@ -72,22 +72,22 @@ That’s it for the backend. Your chat is now ready to handle clients!
 
 1. Now, run `npm install` to install vite, react, and several linting libraries
 
-   > [!NOTE]
-   > check the dependencies in `package.json` for the full list if you're curious
+> [!NOTE]
+> check the dependencies in `package.json` for the full list if you're curious
 
-1. We'll need a couple basic elements. To make our lives easier, let's delete everything in `index.css` and `App.css`. Our code will live in `App.tsx` for the most part.
+3. We'll need a couple basic elements. To make our lives easier, let's delete everything in `index.css` and `App.css`. Our code will live in `App.tsx` for the most part.
 
-   > [!NOTE]
-   > To be more specific, we're building a client-side single page web app
+> [!NOTE]
+> To be more specific, we're building a client-side single page web app
 
-1. Run `npm run dev` to see the output. You should see something like this:
+4. Run `npm run dev` to see the output. You should see something like this:
 
    ![](tutorial/starter-ui.png)
 
-   > [!TIP]
-   > Vite (the framework we're using) supports hot reload, meaning that you don't need to restart the server in order to see your frontend changes. Make a change to see this in action!
+> [!TIP]
+> Vite (the framework we're using) supports hot reload, meaning that you don't need to restart the server in order to see your frontend changes. Make a change and save to see this in action!
 
-1. In `App.tsx`, we're going to need a state for our messages and a form for accepting user messages. Don't worry about making it interactive just yet.
+5. In `App.tsx`, we're going to need a state for our messages and a form for accepting user messages. Don't worry about making it interactive just yet.
 
    > The function `App` that you see in `App.tsx` is called a React (functional) component. For a primer on handling state in components, see [here](https://react.dev/reference/react/useState#usage). Also note that in typescript, `useState` allows you to pass in an additional type argument using angle brackets so that the state is typed correctly. For example, `const [array, setArray] = useState<string[]>([])` allows typescript to know that `array` is of type `string[]`.
 
@@ -128,10 +128,10 @@ That’s it for the backend. Your chat is now ready to handle clients!
    const socket = io("http://localhost:8080");
    ```
 
-   > [!CAUTION]
-   > If you want other people to log on to the chat app on their devices, be sure to replace `localhost` with your actual IP address. See the Deploying Your App section for more details.
+> [!CAUTION]
+> If you want other people to log on to the chat app on their devices, be sure to replace `localhost` with your actual IP address. See the Deploying Your App section for more details.
 
-1. To receive socket messages, use the `socket.on("message", onMessage);` to subscribe and `socket.on("message", onMessage);` to unsubscribe. (where `onMessage` is a callback function that takes in the message as its first argument). Since we want to subscribe on component mount, let's do so in a `useEffect` with an empty dependency array inside the `App` component. See React's [useEffect documentation](https://react.dev/reference/react/useEffect) for more details.
+3. To receive socket messages, use the `socket.on("message", onMessage);` to subscribe and `socket.off("message", onMessage);` to unsubscribe. (where `onMessage` is a callback function that takes in the message as its first argument). Since we want to subscribe on component mount, let's do so in a `useEffect` with an empty dependency array inside the `App` component. See React's [useEffect documentation](https://react.dev/reference/react/useEffect) for more details.
 
 1. Once we received a message, we'll need to update the message state to trigger a component re-render. As a hint, `setXXX()` can also accept a callback function where the input is the old state and the returned value is the new state.
 1. To handle form submissions, make sure your input box is wrapped in a `form` component. We'll then add the following:
@@ -140,11 +140,13 @@ That’s it for the backend. Your chat is now ready to handle clients!
         onSubmit={(ev) => {
           ev.preventDefault();
           const formData = new FormData(ev.target as HTMLFormElement);
-          socket.emit("message", formData.get("message")); // "message" is the name attribute for the input box (you'll need to set this yourself)
+          socket.emit("message", formData.get("message")); // "message" is the name attribute for the input element (you'll need to set the "name" attribute yourself)
         }}
       >
    ```
-1. [insert video demo and example code]
+1. Now, assuming your backend is running, we should have something like the following!
+
+[![](tutorial/demo.mov)](tutorial/demo.mov)
 
 ## Deploying your app!
 
