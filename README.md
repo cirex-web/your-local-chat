@@ -1,11 +1,22 @@
 ## Build your own local network chat with React and Typescript!
 
+We'll be building a bare-bones version of this, hosted on your very own computer.
+![](tutorial/live-chat.png)
+
 > [!TIP]  
-> If you’re stuck, check out the reference implementation in the same repo!
+> If you’re stuck, check out the reference implementation in the same repo! Its feature scope is a bit broader than what's covered here, so don't worry if you don't understand everything on first pass.
 
 # Table of contents
 
-<!-- TODO: insert final picture demo -->
+### [Overview](#overview)
+
+### [Backend](#backend)
+
+### [Frontend (UI)](#writing-the-frontend-ui-no-styles-just-basic-elements)
+
+### [Frontend (interactivity)](#making-the-frontend-interactive)
+
+### [Deploying your App](#deploying-your-app-1)
 
 ## Overview
 
@@ -48,20 +59,21 @@ Familiarity with React and Typescript is recommended.
 
     - Using this `socket`, we can run `socket.on(“message”,(payload)=>{})` to receive messages
     - `io.emit(“message”, payload)` will send the payload to all subscribers.
-      > [!NOTE]
-      > Note that payload can be any type, even an js object! You can type the payload however you wish. (just make sure to re-use the same type for the frontend)
 
-1.  Let's mount the server on port 8080 as follows.
+> [!NOTE]
+> Note that payload can be any type, even an js object! You can type the payload however you wish. (just make sure to re-use the same type for the frontend)
+
+6.  Let's mount the server on port 8080 as follows.
     ```ts
     httpServer.listen(8080, "0.0.0.0", () =>
       console.log("listening on " + JSON.stringify(httpServer.address()))
     );
     ```
-1.  To run the server, we’ll add a `start` command script with the value `tsx server.ts` to `package.json`.
+7.  To run the server, we’ll add a `start` command script with the value `tsx server.ts` to `package.json`.
     ```json
     + "scripts": { "start": "tsx server.ts" }
     ```
-1.  We can now run the server by running `npm run start` in the terminal. You should see an output similar to the following:
+8.  We can now run the server by running `npm run start` in the terminal. You should see an output similar to the following:
     ![](tutorial/backend-output.png)
 
 That’s it for the backend. Your chat is now ready to handle clients!
@@ -145,34 +157,75 @@ That’s it for the backend. Your chat is now ready to handle clients!
       >
    ```
 1. Now, assuming your backend is running, we should have something like the following!
-<video controls width="600">
-   <source
-               src="tutorial/demo.mov"
-               type="video/mp4">
-   Your browser does not support the video tag.
-</video>
+   <video style="width:100%" controls src="tutorial/demo.mov" type="video/mp4"/>
+
+    <details>
+     <summary>See here for a reference solution</summary>
+
+   ```ts
+   import { useEffect, useState } from "react";
+   import "./App.css";
+   import { io } from "socket.io-client";
+   const socket = io(`${window.location.hostname}:8080`);
+
+   function App() {
+     const [messages, setMessages] = useState<string[]>(["hi", "bye"]);
+     useEffect(() => {
+       const onMessage = (payload: string) => {
+         setMessages((messages) => [...messages, payload]);
+       };
+       socket.on("message", onMessage);
+       return () => {
+         socket.off("message", onMessage);
+       };
+     }, []);
+     return (
+       <>
+         <ul>
+           {messages.map((message) => (
+             <li>{message}</li>
+           ))}
+         </ul>
+         <form
+           onSubmit={(ev) => {
+             ev.preventDefault();
+             const formData = new FormData(ev.target as HTMLFormElement);
+             socket.emit("message", formData.get("message"));
+           }}
+         >
+           <input type="text" placeholder="Your message here" name="message" />
+         </form>
+       </>
+     );
+   }
+
+   export default App;
+   ```
+
+</details>
 
 ## Deploying your app!
 
-1. For the frontend, add `--host` to expose it
-1. Change the ws connection to point to the same IP (you can hardcode it or access it dynamically with some other thing)
+1. For the frontend, make the following change in `package.json` and then restart the server.
+   ![](tutorial/vite-host.png)
+1. Change the frontend WebSocket address to point to the same IP as the frontend URL (you can hardcode it or access it dynamically with `window.location.hostname`)
+1. Now, copy the frontend link with your IP (not the localhost one) to share the chat app with your friends!
 
-Bonus Quality of life tweaks
+## Bonus Quality of life tweaks
+
+Have some extra time? Here are some extensions that build upon what we've just covered.
 
 - Clear the message input once the message sends
 - Add a state/indicator for whether or not the websocket connection is active.
-- Make the site look good
+- Style the site to be more user-friendly
 - Scroll to bottom on new message
-- Add a username
-- Put the message in its own div so you can copy-paste
+- Allow users to put in username
+- Put the message in its own div so you can copy-paste the message without copying the username
 
-Extra stuff (exercise for the reader)
-Encrypt messages
-Save messages
-Indicator for the number of people online
-Notifications when someone joins or leaves the chat
-Chat rooms (aka socket namespaces)
+## Bonus Nontrivial features
 
-```
-
-```
+- Encrypt messages
+- Save messages
+- Indicator for the number of people online
+- Notifications when someone joins or leaves the chat
+- Chat rooms (aka socket namespaces)
