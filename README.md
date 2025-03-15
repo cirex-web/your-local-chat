@@ -70,7 +70,7 @@ Familiarity with React and Typescript is recommended.
     );
     ```
 7.  To run the server, we’ll add a `start` command script with the value `tsx server.ts` to `package.json`.
-    ```json
+    ```diff
     + "scripts": { "start": "tsx server.ts" }
     ```
 8.  We can now run the server by running `npm run start` in the terminal. You should see an output similar to the following:
