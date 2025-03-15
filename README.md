@@ -157,7 +157,10 @@ Our backend is now ready to handle clients!
       >
    ```
 1. Now, assuming our backend is running, we should have something like the following!
-   <video style="width:100%" controls src="tutorial/demo.mov" type="video/mp4"/>
+
+
+https://github.com/user-attachments/assets/1c084a11-5991-40cc-aa14-fdbc98c91a13
+
 
     <details>
      <summary>See here for a reference solution</summary>
