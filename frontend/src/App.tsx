@@ -47,8 +47,8 @@ function App() {
         </div>
         <div className="message-container">
           <div className="messages">
-            {messages.map((message) => (
-              <div className="message">
+            {messages.map((message, i) => (
+              <div className="message" key={i}>
                 <b>{message.username}</b>: {message.message}
               </div>
             ))}
