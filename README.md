@@ -30,6 +30,8 @@ Familiarity with React and Typescript is recommended.
 ## Tutorial
 
 1. We’ll be structuring our code with two folders:
+
+   
    ![](tutorial/folder.png)
 
 ## Writing the backend (functionality)
@@ -159,9 +161,6 @@ Our backend is now ready to handle clients!
 1. Now, assuming our backend is running, we should have something like the following!
 
 
-https://github.com/user-attachments/assets/1c084a11-5991-40cc-aa14-fdbc98c91a13
-
-
     <details>
      <summary>See here for a reference solution</summary>
 
@@ -206,6 +205,10 @@ https://github.com/user-attachments/assets/1c084a11-5991-40cc-aa14-fdbc98c91a13
    ```
 
 </details>
+
+
+https://github.com/user-attachments/assets/1c084a11-5991-40cc-aa14-fdbc98c91a13
+
 
 ## Deploying the app!
 
