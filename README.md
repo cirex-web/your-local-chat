@@ -145,8 +145,12 @@ That’s it for the backend. Your chat is now ready to handle clients!
       >
    ```
 1. Now, assuming your backend is running, we should have something like the following!
-
-[![](tutorial/demo.mov)](tutorial/demo.mov)
+<video controls width="600">
+   <source
+               src="tutorial/demo.mov"
+               type="video/mp4">
+   Your browser does not support the video tag.
+</video>
 
 ## Deploying your app!
 
