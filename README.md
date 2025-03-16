@@ -1,6 +1,7 @@
 ## Build a Local Area Network (LAN) chat with React and Typescript!
 
-We'll be building a bare-bones version of this, hosted on your very own computer.
+We'll be building a bare-bones version of the chat app seen below, hosted on your very own computer. What's special about this app is that it can only be accessed by users connected to the same wifi network that you're connected to.
+
 ![](tutorial/live-chat.png)
 
 # Table of contents
