@@ -1,5 +1,8 @@
 ## Build a Local Area Network (LAN) chat with React and Typescript!
 
+> [!NOTE]
+> You do NOT need to clone this repo! The code here is only for reference in case you get stuck. The instructions also contain a reference solution at the end of every section.
+
 We'll be building a bare-bones version of the chat app seen below, hosted on your very own computer. What's special about this app is that it can only be accessed by users connected to the same wifi network that you're connected to.
 
 ![](tutorial/live-chat.png)
@@ -16,9 +19,6 @@ We'll be building a bare-bones version of the chat app seen below, hosted on you
 
 You'll be writing a LAN (Local Access Network) anonymous chat app from scratch! At a high level, both the backend and frontend will be hosted under your private network. Users can chat through the frontend interface when on the same network. (Think: Minecraft LAN servers) Client messages are sent to the backend through a websocket, which is then responsible for relaying the message to all active websocket connections. The frontend will be built with React and Typescript, and the backend will be Typescript. (JavaScript can also be used if preferred, but you may need to deviate from the instructions slightly)
 
-> [!TIP]  
-> If stuck, check out the reference implementation in the same repo! Its feature scope is a bit broader than what's covered here, so don't worry if not everything's clear on first pass.
-
 ## Prerequisites
 
 Ensure you have Node.js installed on your device. (run `npm -v` to check)
@@ -34,7 +34,7 @@ Familiarity with React and Typescript is recommended.
 
 1.  `cd` into the backend folder and run `npm init -y`, which creates a `package.json` file
 1.  Run `npm i socket.io tsx` to install socket.io (for our websocket initialization) and tsx (to start up the server). If this was successful, a `node_modules` folder will be created.
-1.  Create a file called `server.ts` (or with any other name, as long as it ends in `.ts`). Let's set up our websocket server now! Start with these imports:
+1.  Create a file called `server.ts` (or with any other name, as long as it ends in `.ts`) inside the `backend` folder. Let's set up our websocket server now! Start with these imports:
 
     ```ts
     import http from "http";
@@ -53,10 +53,10 @@ Familiarity with React and Typescript is recommended.
 
 5.  Using the `io` websocket server instance, we'll now add the feature to send and receive messages from clients. Here are some hints:
 
-    - To listen to a websocket connection, we can call `io.on(“connect”,(socket)=>{})` where the second argument is a callback that takes in the newly created connection.
+    - To listen to a websocket connection, we can call `io.on("connect",(socket)=>{})` where the second argument is a callback that takes in the newly created connection.
 
-    - Using this `socket`, we can run `socket.on(“message”,(payload)=>{})` to receive messages
-    - `io.emit(“message”, payload)` will send the payload to all subscribers.
+    - Using this `socket`, we can run `socket.on("message",(payload)=>{})` to receive messages
+    - `io.emit("message", payload)` will send the payload to all subscribers.
 
 > [!NOTE]
 > Note that payload can be any type, even a JS object! (just make sure to re-use the same type for the frontend)
@@ -74,7 +74,7 @@ Familiarity with React and Typescript is recommended.
 8.  We can now run the server by running `npm run start` in the terminal. If everything works, we should get an output similar to the following:
     ![](tutorial/backend-output.png)
 
-Our backend is now ready to handle clients!
+To restart the server, type `ctrl-c` or `ctrl-d` in the terminal and run `npm run start` again. Our backend is now ready to handle clients!
 
 <details>
      <summary>See here for a reference solution</summary>
@@ -166,9 +166,9 @@ export default App;
 > [!CAUTION]
 > To allow other people to log on to the chat app on their devices, be sure to replace `localhost` with your actual IP address. See the `Deploying The App` section for more details.
 
-3. To receive socket messages, use the `socket.on("message", onMessage);` to subscribe and `socket.off("message", onMessage);` to unsubscribe. (where `onMessage` is a callback function that takes in the message as its first argument). Since we want to subscribe on component mount, let's do so in a `useEffect` with an empty dependency array inside the `App` component. See React's [useEffect documentation](https://react.dev/reference/react/useEffect) for more details.
+3. To receive socket messages, use the `socket.on("message", onMessage);` to subscribe and `socket.off("message", onMessage);` to unsubscribe. (where `onMessage` is a callback function that gets invoked with the message as its first argument when the backend emits a message). Since we want to subscribe on component mount, let's do so in a `useEffect` with an empty dependency array inside the `App` component. See React's [useEffect documentation](https://react.dev/reference/react/useEffect) for more details.
 
-1. Once we received a message, we'll need to update the message state to trigger a component re-render. As a hint, `setXXX()` can also accept a callback function where the input is the old state and the returned value is the new state.
+1. Once we received a message, we'll need to update the message state to trigger a component re-render. As a hint, `setXXX()` can also accept a callback function where the input is the previous state and the returned value is the new state, which can possibly incorporate the previous state in it.
 1. To handle form submissions, make sure the input box is wrapped in a `form` component. We'll then add something like the following to grab the input message when form submission is triggered:
 
    ```jsx
@@ -176,7 +176,10 @@ export default App;
         onSubmit={(ev) => {
           ev.preventDefault();
           const formData = new FormData(ev.target as HTMLFormElement);
-          socket.emit("message", formData.get("message")); // "message" is the name attribute for the input element (we'll need to set the "name" attribute on the input element manually)
+          socket.emit("message", formData.get("message"));
+          // "message" is the name attribute for the input element
+          // (we'll need to set the "name" attribute on the input
+          // element manually)
         }}
       >
    ```
