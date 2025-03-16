@@ -1,4 +1,4 @@
-## Build a LAN chat with React and Typescript!
+## Build a Local Area Network (LAN) chat with React and Typescript!
 
 We'll be building a bare-bones version of this, hosted on your very own computer.
 ![](tutorial/live-chat.png)
