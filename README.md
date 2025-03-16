@@ -5,11 +5,11 @@ We'll be building a bare-bones version of this, hosted on your very own computer
 
 # Table of contents
 
-- [Overview](#overview-1)
-- [Backend](#writing-the-backend-functionality)
+- [Overview](#overview)
+- [Backend](#writing-the-backend)
 - [Frontend (UI)](#writing-the-frontend-ui-no-styles-just-basic-elements)
 - [Frontend (interactivity)](#making-the-frontend-interactive)
-- [Deploying The App](#deploying-the-app-1)
+- [Deploying The App](#deploying-the-app)
 
 ## Overview
 
@@ -29,7 +29,7 @@ Familiarity with React and Typescript is recommended.
 
    ![](tutorial/folder.png)
 
-## Writing the backend (functionality)
+## Writing the backend
 
 1.  `cd` into the backend folder and run `npm init -y`, which creates a `package.json` file
 1.  Run `npm i socket.io tsx` to install socket.io (for our websocket initialization) and tsx (to start up the server). If this was successful, a `node_modules` folder will be created.
