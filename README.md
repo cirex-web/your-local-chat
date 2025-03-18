@@ -1,3 +1,5 @@
+(See our reflection in the `reflection.md` file)
+
 ## Build a Local Area Network (LAN) chat with React and Typescript!
 
 > [!NOTE]
